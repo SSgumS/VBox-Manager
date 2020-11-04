@@ -1,0 +1,31 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<section>
+    <h2>VM List</h2>
+    <hr />
+    @foreach (var vm in Model.Vms)
+    {
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="@vm.Id" />
+            <span>@Html.DisplayFor(modelItem => vm.Name)</span>
+            <button asp-page-handler="PowerToggle">On/Off</button>
+            <button asp-page-handler="Clone">Clone</button>
+            <button asp-page-handler="Delete">Delete</button>
+            <a asp-page="./Vm/Ssh" asp-route-id="@vm.Id">SSH</a>
+            <dl>
+                <dt>@Html.DisplayNameFor(modelItem => vm.Status)</dt>
+                <dd>@Html.DisplayFor(modelItem => vm.Status)</dd>
+                <dt>@Html.DisplayNameFor(modelItem => vm.CpuNumber)</dt>
+                <dd>@Html.DisplayFor(modelItem => vm.CpuNumber)</dd>
+                <dt>@Html.DisplayNameFor(modelItem => vm.Memory)</dt>
+                <dd>@Html.DisplayFor(modelItem => vm.Memory) Mb</dd>
+                <a asp-page="./Vm/Edit" asp-route-id="@vm.Id">Edit</a>
+            </dl>
+        </form>
+    }
+</section>

@@ -1,0 +1,34 @@
+﻿@page
+@model EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit VM</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="EditingVm.Id" />
+            <div class="form-group">
+                <label asp-for="EditingVm.CpuNumber" class="control-label"></label>
+                <input asp-for="EditingVm.CpuNumber" class="form-control" />
+                <span asp-validation-for="EditingVm.CpuNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="EditingVm.Memory" class="control-label"></label>
+                <input asp-for="EditingVm.Memory" class="form-control" />
+                <span asp-validation-for="EditingVm.Memory" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <button class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
