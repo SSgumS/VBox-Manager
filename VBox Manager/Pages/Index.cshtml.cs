@@ -11,20 +11,9 @@ namespace VBox_Manager.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly ILogger<IndexModel> _logger;
-        private readonly VBoxManager _manager;
-
-        public IndexModel(ILogger<IndexModel> logger, VBoxManager manager)
+        public IActionResult OnGet()
         {
-            _logger = logger;
-            _manager = manager;
-        }
-
-        public IEnumerable<Models.Vm> Vms { get; set; }
-
-        public void OnGet()
-        {
-            Vms = _manager.GetVms();
+            return RedirectToPage("VM/Index");
         }
     }
 }

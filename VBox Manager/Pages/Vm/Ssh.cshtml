@@ -4,13 +4,14 @@
     ViewData["Title"] = "SSH";
 }
 
-<h2>SSH to VM @Model.VmId</h2>
+<h2>SSH to VM @Model.Vm.Name</h2>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="container">
         <form method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="VmId" />
+            <input type="hidden" asp-for="Vm.Id" />
+            <input type="hidden" asp-for="Vm.Name" />
             <div class="form-group">
                 <label asp-for="Command" class="control-label"></label>
                 <textarea asp-for="Command" placeholder="Your command to run using ssh like &quot;ls&quot; or &quot;mkdir&quot;." class="form-control"></textarea>
@@ -21,7 +22,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Result" class="control-label"></label>
-                <p>@Model.Result</p>
+                <pre>@Model.Result</pre>
             </div>
         </form>
     </div>

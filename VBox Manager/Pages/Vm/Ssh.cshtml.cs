@@ -19,15 +19,15 @@ namespace VBox_Manager.Pages.Vm
         }
 
         [BindProperty]
-        public Guid VmId { get; set; }
+        public Models.Vm Vm { get; set; }
         [BindProperty]
         [Required]
         public string Command { get; set; }
         public string Result { get; set; }
 
-        public void OnGet(Guid id)
+        public async Task OnGetAsync(Guid id)
         {
-            VmId = id;
+            Vm = await _manager.GetVmAsync(id);
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -37,7 +37,14 @@ namespace VBox_Manager.Pages.Vm
                 return Page();
             }
 
-            Result = _manager.RunCommand(Command);
+            try
+            {
+                Result = await _manager.RunCommandAsync(Vm.Id, Command);
+            }
+            catch
+            {
+                ModelState.AddModelError(string.Empty, "Can't connect to the VM.");
+            }
 
             return Page();
         }

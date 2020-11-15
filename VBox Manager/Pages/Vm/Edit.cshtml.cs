@@ -22,24 +22,22 @@ namespace VBox_Manager.Pages.Vm
         }
 
         [BindProperty]
-        public Vm EditingVm { get; set; }
+        public Models.Vm EditingVm { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid id)
         {
-            var vm = _manager.GetVm(id);
+            var vm = await _manager.GetVmAsync(id);
 
             if (vm == null)
             {
                 return NotFound();
             }
 
-            EditingVm = new Vm { Id = vm.Id, CpuNumber = vm.CpuNumber, Memory = vm.Memory };
+            EditingVm = vm;
 
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
             if (!ModelState.IsValid)
@@ -49,34 +47,15 @@ namespace VBox_Manager.Pages.Vm
 
             try
             {
-                _manager.EditVm(EditingVm.CpuNumber, EditingVm.Memory);
+                await _manager.EditVmAsync(EditingVm.Id, EditingVm.Name, EditingVm.CpuNumber, EditingVm.Memory);
             }
-            catch (Exception)
+            catch
             {
-                if (!VmExists(EditingVm.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                ModelState.AddModelError(string.Empty, $"Can't modify the VM.");
+                return Page();
             }
 
-            return RedirectToPage("/Index");
-        }
-
-        private bool VmExists(Guid id)
-        {
-            return _manager.GetVm(id) != null;
-        }
-
-        public class Vm
-        {
-            [Required]
-            public Guid Id { get; set; }
-            public int CpuNumber { get; set; }
-            public int Memory { get; set; }
+            return RedirectToPage("Index");
         }
     }
 }

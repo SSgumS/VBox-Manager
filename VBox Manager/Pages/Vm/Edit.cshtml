@@ -13,6 +13,11 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="EditingVm.Id" />
             <div class="form-group">
+                <label asp-for="EditingVm.Name" class="control-label"></label>
+                <input asp-for="EditingVm.Name" class="form-control" />
+                <span asp-validation-for="EditingVm.Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label asp-for="EditingVm.CpuNumber" class="control-label"></label>
                 <input asp-for="EditingVm.CpuNumber" class="form-control" />
                 <span asp-validation-for="EditingVm.CpuNumber" class="text-danger"></span>
